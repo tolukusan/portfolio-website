@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-cream text-ink;
+  }
+}
+
+@layer utilities {
+  .tag-badge {
+    @apply inline-flex items-center rounded-full border-2 border-ink px-3 py-1 font-mono text-xs font-medium;
+  }
+}
