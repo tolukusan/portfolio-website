@@ -90,9 +90,16 @@ export const stack = {
 // status: shipping features weekly`;
 
 export const socialLinks = [
-  // TODO: replace with real profile URLs
-  { label: "GitHub", href: "#", icon: "github" },
-  { label: "LinkedIn", href: "#", icon: "linkedin" },
-  { label: "Email", href: "mailto:hello@example.com", icon: "email" }, // TODO: replace with real email
-  { label: "Resume", href: "#", icon: "resume" }, // TODO: link real resume PDF
+  { label: "GitHub", href: "https://github.com/tolukusan", icon: "github" },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/iseoluwa-afolayan",
+    icon: "linkedin",
+  },
+  { label: "Email", href: "mailto:ise.fola@gmail.com", icon: "email" },
+  {
+    label: "Resume",
+    href: "https://docs.google.com/document/d/1fdvg2jY9BoKpJgKonYnveo_eB8Cn_e0oJdmXAwO5CAQ",
+    icon: "resume",
+  },
 ] as const;
