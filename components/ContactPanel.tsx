@@ -23,11 +23,15 @@ export default function ContactPanel() {
       <div className="mt-5 flex flex-wrap gap-3">
         {socialLinks.map((link) => {
           const Icon = iconMap[link.icon as keyof typeof iconMap];
+          const isExternal = link.href.startsWith("http");
           return (
             <a
               key={link.label}
               href={link.href}
               aria-label={link.label}
+              {...(isExternal
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {})}
               className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-cream/40 text-cream transition-all hover:-translate-y-0.5 hover:border-yellow hover:text-yellow"
             >
               <Icon className="h-5 w-5" />
@@ -37,7 +41,9 @@ export default function ContactPanel() {
       </div>
 
       <a
-        href="#contact"
+        href="https://wa.me/2348141581870?text=Hi%20Tolu%2C%20I%20came%20across%20your%20portfolio"
+        target="_blank"
+        rel="noopener noreferrer"
         className="mt-6 inline-flex items-center justify-center rounded-full border-3 border-yellow bg-yellow px-6 py-3 font-display text-sm font-bold text-ink shadow-brutal-white transition-all hover:-translate-y-0.5"
       >
         Get in Touch

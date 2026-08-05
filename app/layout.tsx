@@ -17,7 +17,7 @@ const mono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Afolayan Iseoluwa | Backend-leaning Full-Stack Developer",
   description:
-    "Portfolio of Afolayan Iseoluwa (Tolu) — Backend-leaning Full-Stack Developer building with TypeScript, NestJS, Prisma, and PostgreSQL.",
+    "Portfolio of Afolayan Iseoluwa (Tolu) \u2014 Backend-leaning Full-Stack Developer building with TypeScript, NestJS, Prisma, and PostgreSQL.",
 };
 
 export default function RootLayout({

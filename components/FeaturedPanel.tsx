@@ -21,7 +21,7 @@ export default function FeaturedPanel() {
         </h1>
         <p className="mt-4 max-w-2xl text-sm text-ink/80 sm:text-base">
           Lead Developer at Ibadan Digital Academy. I build reliable
-          backend systems and the full-stack products around them — from
+          backend systems and the full-stack products around them &mdash; from
           fintech savings platforms to internal tooling.
         </p>
 

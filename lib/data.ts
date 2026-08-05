@@ -34,7 +34,7 @@ export const experience = [
   {
     role: "Lead Developer",
     org: "Ibadan Digital Academy",
-    period: "2025 — Present",
+    period: "2025 \u2014 Present",
     // TODO: replace with real responsibilities / achievements
     description:
       "Leading development for the academy's internal tooling and training platforms, mentoring peer developers, and shipping full-stack features end to end.",
@@ -97,9 +97,5 @@ export const socialLinks = [
     icon: "linkedin",
   },
   { label: "Email", href: "mailto:ise.fola@gmail.com", icon: "email" },
-  {
-    label: "Resume",
-    href: "https://docs.google.com/document/d/1fdvg2jY9BoKpJgKonYnveo_eB8Cn_e0oJdmXAwO5CAQ",
-    icon: "resume",
-  },
+  { label: "WhatsApp", href: "https://wa.me/2348141581870", icon: "whatsapp" },
 ] as const;
