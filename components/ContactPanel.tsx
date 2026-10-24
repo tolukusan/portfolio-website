@@ -40,14 +40,6 @@ export default function ContactPanel() {
         })}
       </div>
 
-      <a
-        href="https://wa.me/2348141581870?text=Hi%20Tolu%2C%20I%20came%20across%20your%20portfolio"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-6 inline-flex items-center justify-center rounded-full border-3 border-yellow bg-yellow px-6 py-3 font-display text-sm font-bold text-ink shadow-brutal-white transition-all hover:-translate-y-0.5"
-      >
-        Get in Touch
-      </a>
     </section>
   );
 }
