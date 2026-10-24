@@ -6,11 +6,10 @@ export default function EducationSection() {
     >
       <h2 className="font-display text-2xl font-bold">Education</h2>
       <div className="mt-5 rounded-brutal-sm border-3 border-ink bg-cream p-4 sm:p-5">
-        <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <div className="flex flex-wrap items-baseline gap-2">
           <h3 className="font-display text-lg font-bold">
             BSc Computer Science
           </h3>
-          <span className="font-mono text-xs text-ink/60">July 2025</span>
         </div>
         <p className="font-mono text-sm text-orange-dark">
           Covenant University
