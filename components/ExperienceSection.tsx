@@ -1,33 +1,33 @@
 import { experience } from "@/lib/data";
 import SectionHeading from "./SectionHeading";
+import SplitBand from "./SplitBand";
 
 export default function ExperienceSection() {
   return (
-    <section
+    <SplitBand
       id="backstory"
-      className="scroll-mt-32 rounded-brutal border-3 border-ink bg-white p-6 shadow-brutal sm:p-8"
+      staging={{ pose: "sit", how: "sit", side: "left", flip: true }}
+      className="bg-cream"
     >
       <SectionHeading title="Backstory" note="experience log" />
-      <ol className="ml-2 mt-5 flex flex-col gap-6 border-l-3 border-ink pl-6">
+      <ol className="ml-2 mt-10 flex flex-col gap-8 border-l-3 border-ink pl-8">
         {experience.map((role) => (
           <li key={role.role} className="relative">
             <span
               aria-hidden="true"
-              className="absolute -left-[34px] top-5 h-4 w-4 rounded-full border-3 border-ink bg-orange"
+              className="absolute -left-[42px] top-2 h-5 w-5 rounded-full border-3 border-ink bg-orange"
             />
-            <div className="rounded-brutal-sm border-3 border-ink bg-cream p-4 sm:p-5">
-              <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <h3 className="font-display text-lg font-bold">{role.role}</h3>
-                <span className="font-mono text-xs text-ink/60">
-                  {role.period}
-                </span>
-              </div>
-              <p className="font-mono text-sm text-orange-dark">{role.org}</p>
-              <p className="mt-2 text-sm text-ink/80">{role.description}</p>
-            </div>
+            <p className="font-mono text-xs uppercase tracking-wider text-ink/70">
+              {role.period}
+            </p>
+            <h3 className="mt-2 font-display text-3xl font-bold">{role.role}</h3>
+            <p className="mt-1 font-mono text-sm text-ink">{role.org}</p>
+            <p className="mt-4 max-w-xl text-base text-ink/80">
+              {role.description}
+            </p>
           </li>
         ))}
       </ol>
-    </section>
+    </SplitBand>
   );
 }

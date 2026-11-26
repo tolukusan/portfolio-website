@@ -1,10 +1,17 @@
 export const navSections = [
   { id: "profile", label: "Profile" },
+  { id: "projects", label: "Projects" },
   { id: "abilities", label: "Abilities" },
   { id: "backstory", label: "Backstory" },
-  { id: "projects", label: "Projects" },
   { id: "education", label: "Education" },
   { id: "party", label: "Add to party" },
+] as const;
+
+// The thin ink strip above the header.
+export const topStrip = [
+  "Available for work",
+  "Based in Nigeria",
+  "Open to backend roles",
 ] as const;
 
 export const party = {
@@ -25,7 +32,8 @@ export const hero = {
   projectsLabel: "See projects",
 } as const;
 
-export const turnaroundNotes = [
+// Hand-written notes in the hero's bottom-right corner.
+export const heroNotes = [
   "thinks in queues and transactions",
   "ships weekly",
   "fixes what breaks at 2am",

@@ -122,37 +122,29 @@ test("hero introduces Tolu and offers the recruit action", () => {
   assert.doesNotMatch(text, /CURRENTLY BUILDING/);
 });
 
-test("turnaround is an anonymous wireframe sketch", () => {
+test("hero puts the waving figure in front of a giant decorative name", () => {
   const h = section("about");
-  const label = h.match(/role="img" aria-label="([^"]+)"/)?.[1] ?? "";
-  assert.match(label, /wireframe/i);
-  assert.doesNotMatch(label, /Tolu|Iseoluwa|Afolayan/);
+  assert.match(h, /<p[^>]*aria-hidden="true"[^>]*>TOLU<\/p>/);
+  const wave = h.match(/<img[^>]*data-pose="wave"[^>]*>/)?.[0];
+  assert.ok(wave, "no wave pose in the hero");
+  assert.match(wave, /loading="eager"/);
   const t = textOf(h);
-  for (const s of [
-    "Front",
-    "Three-quarter",
-    "Side",
-    "turnaround · rough · 1:1",
-    "thinks in queues and transactions",
-    "ships weekly",
-    "fixes what breaks at 2am",
-  ]) {
+  for (const s of ["thinks in queues and transactions", "ships weekly", "fixes what breaks at 2am"]) {
     assert.ok(t.includes(s), s);
   }
-  assert.doesNotMatch(t, /character design in progress/i);
+  assert.doesNotMatch(html, /sketch-(draw|fill)|wireframe/i);
 });
 
-test("turnaround svg scales with its container", () => {
-  const svg = section("about").match(/<svg[^>]*role="img"[^>]*>/)?.[0];
-  assert.ok(svg, "no turnaround svg");
-  assert.match(svg, /viewBox=/);
-  assert.doesNotMatch(svg, /\swidth="\d/);
-});
-
-test("draw-in animation is turnaround-only and respects reduced motion", () => {
-  const outside = html.replace(section("about"), "");
-  assert.doesNotMatch(outside, /sketch-(draw|fill)/);
-  assert.match(css, /prefers-reduced-motion:\s*reduce\)[^}]*\{[^}]*\.sketch-draw/);
+test("poses are decorative, sized, and lazy below the fold", () => {
+  const imgs = html.match(/<img[^>]*data-pose="[^"]+"[^>]*>/g) ?? [];
+  assert.ok(imgs.length >= 7, `only ${imgs.length} poses`);
+  for (const img of imgs) {
+    assert.match(img, /alt=""/);
+    assert.match(img, /aria-hidden="true"/);
+    assert.match(img, /\swidth="\d+"/);
+    assert.match(img, /\sheight="\d+"/);
+    if (!/data-pose="wave"/.test(img)) assert.match(img, /loading="lazy"/);
+  }
 });
 
 test("backstory is a timeline of the existing roles", () => {
@@ -194,10 +186,18 @@ test("every project has a diagram built only from its published steps", () => {
   }
 });
 
-test("featured project comes first and spans the row", () => {
+test("one project per band, each with its own diagram and pose", () => {
   const p = section("projects");
-  assert.ok(p.indexOf("Financial Ledger") < p.indexOf("Internal Workflow"));
-  assert.match(p, /data-featured="true"/);
+  const bands = p.split(/<article\b/).slice(1);
+  assert.equal(bands.length, 4);
+  for (const band of bands) {
+    const svgs = band.match(/<svg[^>]*role="img"[^>]*>/g) ?? [];
+    assert.equal(svgs.filter((s) => !hiddenOnPhone(s)).length, 1);
+    assert.equal((band.match(/data-pose="/g) ?? []).length, 1);
+    assert.equal((band.match(/<h3[\s>]/g) ?? []).length, 1);
+  }
+  // featured project comes first
+  assert.match(bands[0], /data-featured="true"[\s\S]*Financial Ledger/);
 });
 
 test("add to party panel has recruit button and labelled sticker links", () => {
@@ -222,21 +222,63 @@ test("every mailto uses the one socialLinks email", () => {
   assert.equal(mailtos.size, 1);
 });
 
-const tabs = ["profile", "abilities", "backstory", "projects", "education", "party"];
+const sections = ["profile", "projects", "abilities", "backstory", "education", "party"];
 
-test("header has folder tabs for every section, in order", () => {
+test("header links to every section, in page order", () => {
   const header = html.slice(html.indexOf("<header"), html.indexOf("</header>"));
-  const hrefs = [...header.matchAll(/href="#([^"]+)"/g)].map((m) => m[1]);
-  assert.deepEqual(hrefs, tabs);
+  const nav = header.slice(header.indexOf("<nav"), header.indexOf("</nav>"));
+  const hrefs = [...nav.matchAll(/href="#([^"]+)"/g)].map((m) => m[1]);
+  assert.deepEqual(hrefs, sections);
+  const positions = sections.map((id) => html.indexOf(`id="${id}"`));
+  assert.deepEqual([...positions].sort((a, b) => a - b), positions);
   assert.match(textOf(header), /Add to party/);
-  assert.doesNotMatch(html, /aria-label="Section navigation"/);
+  assert.match(header, /href="mailto:/);
 });
 
-test("tab targets clear the sticky header", () => {
-  for (const id of tabs) {
-    const open = html.match(new RegExp(`<section[^>]*id="${id}"[^>]*>`))?.[0] ?? "";
-    assert.match(open, /scroll-mt-32/, id);
+test("top strip sits above the header", () => {
+  const strip = html.slice(0, html.indexOf("<header"));
+  const t = textOf(strip);
+  for (const s of ["Available for work", "Based in Nigeria", "Open to backend roles"]) {
+    assert.ok(t.includes(s), s);
   }
+});
+
+test("sections are bands that clear the sticky header and snap gently", () => {
+  for (const id of sections) {
+    const open = html.match(new RegExp(`<section[^>]*id="${id}"[^>]*>`))?.[0] ?? "";
+    assert.match(open, /class="[^"]*\bband\b/, id);
+  }
+  assert.match(css, /\.band\{[^}]*scroll-margin-top/);
+  assert.match(css, /scroll-snap-type:y proximity/);
+  assert.doesNotMatch(css, /scroll-snap-type:[^;}]*mandatory/);
+});
+
+test("peek figure is a button that opens a labelled contact dialog", () => {
+  const button = html.match(/<button[^>]*aria-controls="contact-popover"[^>]*>/)?.[0];
+  assert.ok(button, "no peek button");
+  assert.match(button, /aria-expanded="false"/);
+  assert.match(button, /aria-label="[^"]+"/);
+  const start = html.indexOf('id="contact-popover"');
+  assert.ok(start >= 0, "no popover");
+  const open = html.slice(html.lastIndexOf("<div", start), html.indexOf(">", start));
+  assert.match(open, /role="dialog"/);
+  const labelId = open.match(/aria-labelledby="([^"]+)"/)?.[1];
+  assert.ok(labelId && html.includes(`id="${labelId}"`), "dialog label missing");
+  const body = html.slice(start, html.indexOf("</button>", html.indexOf("peek.webp", start)));
+  const t = textOf(body);
+  for (const s of ["Email", "Copy", "GitHub", "LinkedIn", "WhatsApp", "Recruit this character"]) {
+    assert.ok(t.includes(s), s);
+  }
+  assert.match(body, /href="mailto:/);
+});
+
+test("small text meets contrast and focus is visible", () => {
+  assert.doesNotMatch(html, /text-orange-dark/);
+  // orange text only on the giant decorative name
+  for (const tag of html.match(/<[^>]*class="[^"]*\btext-orange\b[^"]*"[^>]*>/g) ?? []) {
+    assert.match(tag, /aria-hidden="true"/);
+  }
+  assert.match(css, /:focus-visible\{outline:3px solid/);
 });
 
 test("diagram labels stay readable on phones", () => {

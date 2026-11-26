@@ -1,23 +1,24 @@
 import SectionHeading from "./SectionHeading";
+import SplitBand from "./SplitBand";
 
 export default function EducationSection() {
   return (
-    <section
+    // training arc: he does a pull-up on the band's top line
+    <SplitBand
       id="education"
-      className="scroll-mt-32 rounded-brutal border-3 border-ink bg-white p-6 shadow-brutal sm:p-8"
+      staging={{ pose: "hang", how: "hang", side: "right" }}
+      className="bg-white"
     >
       <SectionHeading title="Education" note="training arc" />
-      <div className="mt-5 rounded-brutal-sm border-3 border-ink bg-cream p-4 sm:p-5">
-        <div className="flex flex-wrap items-baseline gap-2">
-          <h3 className="font-display text-lg font-bold">
-            BSc Computer Science
-          </h3>
-        </div>
-        <p className="font-mono text-sm text-orange-dark">
+      <div className="mt-10">
+        <p className="font-mono text-xs uppercase tracking-wider text-ink/70">
           Covenant University
         </p>
-        <p className="mt-2 text-sm text-ink/80">2nd Class Upper</p>
+        <h3 className="mt-2 font-display text-3xl font-bold">
+          BSc Computer Science
+        </h3>
+        <p className="mt-3 text-base text-ink/80">2nd Class Upper</p>
       </div>
-    </section>
+    </SplitBand>
   );
 }
