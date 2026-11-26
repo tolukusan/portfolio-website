@@ -11,7 +11,7 @@ export default function Hero() {
         {hero.tab}
       </span>
 
-      <div className="grid gap-8 rounded-brutal border-3 border-ink bg-white p-6 pt-10 shadow-brutal-lg sm:p-8 sm:pt-12 lg:grid-cols-2 lg:items-center">
+      <div className="grid grid-cols-1 gap-8 rounded-brutal border-3 border-ink bg-white p-6 pt-10 shadow-brutal-lg sm:p-8 sm:pt-12 lg:grid-cols-2 lg:items-center">
         <div>
           <p className="font-mono text-xs uppercase text-orange-dark">
             {hero.greeting}

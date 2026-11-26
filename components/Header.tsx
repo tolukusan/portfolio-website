@@ -27,7 +27,7 @@ export default function Header() {
 
       {/* Folder tabs sit flush on the header's bottom edge. Only this row scrolls sideways. */}
       <nav aria-label="Sections" className="mx-auto max-w-6xl px-4 lg:px-6">
-        <ul className="-mb-[3px] mt-2 flex pt-1 gap-1 overflow-x-auto">
+        <ul className="-mb-[3px] mt-2 flex gap-1 overflow-x-auto pt-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {navSections.map((section) => (
             <li key={section.id} className="shrink-0">
               <a

@@ -15,7 +15,7 @@ export default function Home() {
 
       <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-10 px-4 py-8 lg:px-6 lg:py-12">
         <Hero />
-        <div className="grid items-start gap-10 lg:grid-cols-2">
+        <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-2">
           <ProfileCard />
           <SkillsSection />
         </div>
