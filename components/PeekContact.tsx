@@ -175,6 +175,8 @@ export default function PeekContact() {
         <img
           src="/character/cut/peek.webp"
           alt=""
+          data-peek=""
+          data-open={open ? "" : undefined}
           width={POSES.peek.w}
           height={POSES.peek.h}
           loading="lazy"

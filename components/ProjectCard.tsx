@@ -1,7 +1,8 @@
 import type { projects } from "@/lib/data";
 import { diagrams } from "./diagrams";
 import HandNote from "./HandNote";
-import Pose, { type PoseName } from "./Pose";
+import AnimatedPose from "./AnimatedPose";
+import { type PoseName } from "./Pose";
 
 type Project = (typeof projects)[number];
 
@@ -22,22 +23,22 @@ export function StagedPose({ staging }: { staging: Staging }) {
 
   if (how === "sit") {
     return (
-      <div className={`relative mx-auto aspect-[558/1081] ${poseHeight}`}>
+      <div className={`relative mx-auto aspect-[638/1081] ${poseHeight}`}>
         {/* the ledge he sits on; the seat line is at ~59% of the pose */}
         <span
           aria-hidden="true"
           className="absolute -inset-x-[30%] bottom-0 top-[57%] rounded-t-brutal-sm border-3 border-b-0 border-ink bg-white bg-[radial-gradient(#11111133_1px,transparent_1px)] [background-size:16px_16px]"
         />
-        <Pose pose={pose} flip={flip} className="relative h-full" />
+        <AnimatedPose pose={pose} flip={flip} className="relative h-full" />
       </div>
     );
   }
 
   return (
-    <Pose
+    <AnimatedPose
       pose={pose}
       flip={flip}
-      className={`mx-auto ${poseHeight} ${how === "hang" ? "-mt-[3%]" : ""}`}
+      className={`mx-auto w-fit ${poseHeight} ${how === "hang" ? "-mt-[3%]" : ""}`}
     />
   );
 }

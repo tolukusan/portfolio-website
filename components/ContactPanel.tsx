@@ -1,6 +1,6 @@
 import { emailHref, hero, party, socialLinks } from "@/lib/data";
 import { iconMap } from "./icons";
-import Pose from "./Pose";
+import AnimatedPose from "./AnimatedPose";
 
 export default function ContactPanel() {
   return (
@@ -48,10 +48,10 @@ export default function ContactPanel() {
 
         {/* points left, back at the Recruit button */}
         <div className="flex items-end justify-center">
-          <Pose
+          <AnimatedPose
             pose="point"
             flip
-            className="h-[300px] sm:h-[360px] lg:h-[min(540px,70svh)]"
+            className="w-fit h-[300px] sm:h-[360px] lg:h-[min(540px,70svh)]"
           />
         </div>
       </div>

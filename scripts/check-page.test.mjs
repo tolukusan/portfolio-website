@@ -323,3 +323,20 @@ test("hero figure is a button that turns him around", () => {
   assert.match(button, /aria-label="[^"]*turn[^"]*"/i);
   assert.match(button, /data-pose="wave"/);
 });
+
+test("animation frames match their pose's size, so frames swap in place", () => {
+  // WebP with alpha is VP8X: canvas width-1 and height-1 are 24-bit at bytes 24 and 27.
+  const size = (f) => {
+    const b = readFileSync(join("public/character/cut", f));
+    assert.equal(b.toString("ascii", 12, 16), "VP8X", `${f} is not an extended WebP`);
+    return [b.readUIntLE(24, 3) + 1, b.readUIntLE(27, 3) + 1].join("x");
+  };
+  const files = readdirSync("public/character/cut").filter((f) => f.endsWith(".webp"));
+  const frames = files.filter((f) => f.includes("-"));
+  assert.ok(frames.length >= 8, "expected the animation frames to be present");
+  for (const f of frames) {
+    const base = `${f.split("-")[0]}.webp`;
+    assert.ok(files.includes(base), `${f} has no base pose`);
+    assert.equal(size(f), size(base), `${f} differs in size from ${base}`);
+  }
+});

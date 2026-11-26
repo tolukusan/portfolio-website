@@ -13,6 +13,11 @@
 # ERASE="x0,y0,x1,y1;..." (source-image pixels) clears stray marks Gemini drew,
 # e.g. the ledge line in the hang and sit poses:
 #   ERASE="0,44,291,57;358,44,544,57;611,44,896,57" scripts/cut-character.sh pose2.jfif hang
+#
+# CROP="w:h:x:y" forces the trim rectangle instead of fitting it to the figure.
+# Animation frames of one pose must share a rectangle, or the figure jumps when
+# frames swap: cut each frame once, take the union of the printed crops, then
+# re-cut the whole set with CROP set to that union.
 set -euo pipefail
 
 in="$1"; name="$2"; white="${3:-}"
@@ -43,7 +48,8 @@ IFS=, read -r w h < <(ffprobe -v error -select_streams v:0 -show_entries stream=
 ffmpeg -loglevel error -y -i "$tmp/cut.png" -vf "alphaextract,format=gray" -f rawvideo "$tmp/alpha.raw"
 
 # Bounding box of the opaque pixels, padded 8px.
-crop="$(node -e '
+crop="${CROP:-}"
+[ -n "$crop" ] || crop="$(node -e '
 const a = require("fs").readFileSync(process.argv[1]); const W = +process.argv[2], H = +process.argv[3];
 let x0 = W, y0 = H, x1 = -1, y1 = -1;
 for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (a[y * W + x] > 24) {
