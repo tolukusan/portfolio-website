@@ -86,6 +86,7 @@ export const projects = [
     description:
       "Built core financial application logic, ledger schemas, and transaction state handling, including scheduled reconciliation for missed payment events and automated reversal credits.",
     stack: ["NestJS", "Node.js", "Prisma", "PostgreSQL"],
+    note: "missed payments get caught and credited back",
     tab: "FEATURED",
   },
   {
@@ -95,6 +96,7 @@ export const projects = [
     description:
       "Developed internal tools for shared task management, certificate generation, image-layout automation, book-cover mockups, and standardized operational reporting.",
     stack: ["TypeScript", "Node.js", "Workflow Automation"],
+    note: "the repetitive jobs, automated",
   },
   {
     slug: "educational-content-publishing",
@@ -103,6 +105,7 @@ export const projects = [
     description:
       "Refactored a legacy content framework, resolved structural issues, and improved publishing pipelines and programmatic layouts for structured educational materials.",
     stack: ["TypeScript", "React", "Next.js"],
+    note: "untangled the old framework first",
   },
   {
     slug: "enterprise-request-management",
@@ -111,6 +114,7 @@ export const projects = [
     description:
       "Built an internal request workflow with a dedicated interface, centralized SharePoint records, and automated multi-stage email routing for enterprise operations.",
     stack: ["Power Apps", "Power Automate", "SharePoint"],
+    note: "requests route themselves",
   },
 ] as const;
 

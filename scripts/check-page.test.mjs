@@ -164,3 +164,30 @@ test("backstory is a timeline of the existing roles", () => {
   }
   assert.ok(!html.includes('id="experience"'));
 });
+
+const diagramLabels = {
+  "Financial Ledger": ["Payment events", "Transaction state", "Ledger", "Scheduled reconciliation", "Reversal credits"],
+  "Internal Workflow": ["Shared tasks", "Certificates", "Image layouts & mockups", "Reports"],
+  "Educational Content": ["Legacy framework (refactored)", "Publishing pipeline", "Layouts"],
+  "Enterprise Request": ["Request form (Power Apps)", "SharePoint records", "Multi-stage email routing"],
+};
+
+test("every project has a diagram built only from its published steps", () => {
+  const p = section("projects");
+  const t = textOf(p);
+  assert.match(t, /sketchbook pages/);
+  assert.equal((p.match(/role="img"/g) ?? []).length, 4);
+  for (const labels of Object.values(diagramLabels)) {
+    for (const l of labels) assert.ok(t.includes(l), l);
+  }
+  for (const svg of p.match(/<svg[^>]*role="img"[^>]*>/g) ?? []) {
+    assert.match(svg, /viewBox=/);
+    assert.doesNotMatch(svg, /\swidth="\d/);
+  }
+});
+
+test("featured project comes first and spans the row", () => {
+  const p = section("projects");
+  assert.ok(p.indexOf("Financial Ledger") < p.indexOf("Internal Workflow"));
+  assert.match(p, /data-featured="true"/);
+});
