@@ -1,7 +1,7 @@
 export const navSections = [
   { id: "about", number: "01", label: "About" },
   { id: "abilities", number: "02", label: "Abilities" },
-  { id: "experience", number: "03", label: "Experience" },
+  { id: "backstory", number: "03", label: "Backstory" },
   { id: "projects", number: "04", label: "Projects" },
   { id: "education", number: "05", label: "Education" },
   { id: "contact", number: "06", label: "Contact" },

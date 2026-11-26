@@ -154,3 +154,13 @@ test("draw-in animation is turnaround-only and respects reduced motion", () => {
   assert.doesNotMatch(outside, /sketch-(draw|fill)/);
   assert.match(css, /prefers-reduced-motion:\s*reduce\)[^}]*\{[^}]*\.sketch-draw/);
 });
+
+test("backstory is a timeline of the existing roles", () => {
+  const b = section("backstory");
+  assert.match(b, /<ol/);
+  const t = textOf(b);
+  for (const s of ["Backstory", "experience log", "Lead Developer", "Ibadan Digital Academy"]) {
+    assert.ok(t.includes(s), s);
+  }
+  assert.ok(!html.includes('id="experience"'));
+});
