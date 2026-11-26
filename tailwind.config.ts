@@ -25,6 +25,7 @@ const config: Config = {
       fontFamily: {
         display: ["var(--font-display)", "sans-serif"],
         mono: ["var(--font-mono)", "monospace"],
+        hand: ["var(--font-hand)", "cursive"],
       },
       boxShadow: {
         brutal: "4px 4px 0px 0px #111111",

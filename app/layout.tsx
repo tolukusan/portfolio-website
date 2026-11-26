@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Space_Grotesk, JetBrains_Mono, Caveat } from "next/font/google";
 import "./globals.css";
 
 const display = Space_Grotesk({
@@ -12,6 +12,12 @@ const mono = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
   variable: "--font-mono",
+});
+
+const hand = Caveat({
+  subsets: ["latin"],
+  weight: ["500", "700"],
+  variable: "--font-hand",
 });
 
 export const metadata: Metadata = {
@@ -27,7 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${display.variable} ${mono.variable} font-display antialiased`}>
+      <body className={`${display.variable} ${mono.variable} ${hand.variable} font-display antialiased`}>
         {children}
       </body>
     </html>

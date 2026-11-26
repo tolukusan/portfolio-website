@@ -7,7 +7,7 @@ export default function ContactPanel() {
       id="contact"
       className="scroll-mt-24 rounded-brutal border-3 border-ink bg-ink p-6 text-cream shadow-brutal sm:p-8"
     >
-      <p className="font-mono text-xs text-mint">// let&apos;s work together</p>
+      <p className="font-mono text-xs text-mint">{"// let's work together"}</p>
       <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl">
         Get in touch
       </h2>
