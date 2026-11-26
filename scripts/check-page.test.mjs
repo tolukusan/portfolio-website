@@ -100,3 +100,57 @@ test("abilities uses one swatch tone per group and holds the code block", () => 
   assert.match(a, /stack\.config\.ts/);
   assert.ok(!html.includes('id="skills"'));
 });
+
+test("hero introduces Tolu and offers the recruit action", () => {
+  const h = section("about");
+  const t = textOf(h);
+  for (const s of [
+    "CHARACTER SHEET",
+    "Hello, I'm",
+    "Afolayan Iseoluwa",
+    "(Tolu)",
+    "I build reliable backend systems (ledgers, job queues, automation) and the interfaces on top of them.",
+    "Recruit this character",
+    "Email me about a role",
+    "See projects",
+  ]) {
+    assert.ok(t.includes(s), s);
+  }
+  assert.match(h, /<h1[\s\S]*Afolayan Iseoluwa[\s\S]*<\/h1>/);
+  assert.match(h, /href="mailto:[^"]+"/);
+  assert.match(h, /href="#projects"/);
+  assert.doesNotMatch(text, /CURRENTLY BUILDING/);
+});
+
+test("turnaround is an anonymous wireframe sketch", () => {
+  const h = section("about");
+  const label = h.match(/role="img" aria-label="([^"]+)"/)?.[1] ?? "";
+  assert.match(label, /wireframe/i);
+  assert.doesNotMatch(label, /Tolu|Iseoluwa|Afolayan/);
+  const t = textOf(h);
+  for (const s of [
+    "Front",
+    "Three-quarter",
+    "Side",
+    "turnaround · rough · 1:1",
+    "thinks in queues and transactions",
+    "ships weekly",
+    "fixes what breaks at 2am",
+  ]) {
+    assert.ok(t.includes(s), s);
+  }
+  assert.doesNotMatch(t, /character design in progress/i);
+});
+
+test("turnaround svg scales with its container", () => {
+  const svg = section("about").match(/<svg[^>]*role="img"[^>]*>/)?.[0];
+  assert.ok(svg, "no turnaround svg");
+  assert.match(svg, /viewBox=/);
+  assert.doesNotMatch(svg, /\swidth="\d/);
+});
+
+test("draw-in animation is turnaround-only and respects reduced motion", () => {
+  const outside = html.replace(section("about"), "");
+  assert.doesNotMatch(outside, /sketch-(draw|fill)/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce\)[^}]*\{[^}]*\.sketch-draw/);
+});

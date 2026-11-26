@@ -7,6 +7,25 @@ export const navSections = [
   { id: "contact", number: "06", label: "Contact" },
 ] as const;
 
+export const hero = {
+  tab: "CHARACTER SHEET",
+  greeting: "Hello, I'm",
+  name: "Afolayan Iseoluwa",
+  nickname: "Tolu",
+  role: "Backend-leaning full-stack developer",
+  pitch:
+    "I build reliable backend systems (ledgers, job queues, automation) and the interfaces on top of them.",
+  recruitLabel: "Recruit this character",
+  recruitHint: "Email me about a role",
+  projectsLabel: "See projects",
+} as const;
+
+export const turnaroundNotes = [
+  "thinks in queues and transactions",
+  "ships weekly",
+  "fixes what breaks at 2am",
+] as const;
+
 export type Profile = {
   characterClass: string;
   base: string;
@@ -117,3 +136,7 @@ export const socialLinks = [
   { label: "Email", href: "mailto:ise.fola@gmail.com", icon: "email" },
   { label: "WhatsApp", href: "https://wa.me/2348141581870", icon: "whatsapp" },
 ] as const;
+
+// Every mailto: on the page uses this, so the address changes in one place.
+export const emailHref = socialLinks.find((link) => link.icon === "email")!
+  .href;

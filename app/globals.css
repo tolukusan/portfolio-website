@@ -8,6 +8,36 @@
   }
 }
 
+/* Turnaround draw-in. Strokes need pathLength="1". Kept outside the Tailwind
+   layers so it is never purged. */
+.sketch-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: sketch-draw 1.2s ease-out forwards;
+}
+.sketch-fill {
+  opacity: 0;
+  animation: sketch-fill 0.3s ease-out 1.2s forwards;
+}
+@keyframes sketch-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes sketch-fill {
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sketch-draw,
+  .sketch-fill {
+    animation: none;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
 @layer utilities {
   .tag-badge {
     @apply inline-flex items-center rounded-full border-2 border-ink px-3 py-1 font-mono text-xs font-medium;

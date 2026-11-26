@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
-import FeaturedPanel from "@/components/FeaturedPanel";
+import Hero from "@/components/Hero";
 import ProfileCard from "@/components/ProfileCard";
 import SkillsSection from "@/components/SkillsSection";
 import ExperienceSection from "@/components/ExperienceSection";
@@ -18,7 +18,7 @@ export default function Home() {
         <Sidebar />
 
         <div className="flex flex-1 flex-col gap-10">
-          <FeaturedPanel />
+          <Hero />
           <div className="grid items-start gap-10 lg:grid-cols-2">
             <ProfileCard />
             <SkillsSection />
