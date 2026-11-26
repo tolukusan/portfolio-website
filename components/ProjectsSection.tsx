@@ -10,7 +10,7 @@ export default function ProjectsSection() {
   const rest = projects.filter((project) => !isFeatured(project));
 
   return (
-    <section id="projects" className="scroll-mt-24">
+    <section id="projects" className="scroll-mt-32">
       <SectionHeading title="Projects" note="sketchbook pages" />
       <div className="mt-5 flex flex-col gap-6">
         {featured.map((project) => (

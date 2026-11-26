@@ -18,7 +18,7 @@ export default function ProfileCard() {
   return (
     <section
       id="profile"
-      className="relative scroll-mt-24 rounded-brutal border-3 border-ink bg-white p-6 pt-8 shadow-brutal sm:p-8 sm:pt-10 lg:-rotate-1"
+      className="relative scroll-mt-32 rounded-brutal border-3 border-ink bg-white p-6 pt-8 shadow-brutal sm:p-8 sm:pt-10 lg:-rotate-1"
     >
       {/* tape strip holding the sheet to the page */}
       <span

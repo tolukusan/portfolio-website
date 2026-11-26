@@ -5,7 +5,7 @@ export default function ContactPanel() {
   return (
     <section
       id="party"
-      className="scroll-mt-24 rounded-brutal border-3 border-ink bg-ink p-6 text-cream shadow-brutal sm:p-8"
+      className="scroll-mt-32 rounded-brutal border-3 border-ink bg-ink p-6 text-cream shadow-brutal sm:p-8"
     >
       <h2 className="font-display text-2xl font-bold sm:text-3xl">
         {party.heading}

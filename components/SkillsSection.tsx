@@ -15,7 +15,7 @@ export default function SkillsSection() {
   return (
     <section
       id="abilities"
-      className="scroll-mt-24 rounded-brutal border-3 border-ink bg-white p-6 shadow-brutal sm:p-8"
+      className="scroll-mt-32 rounded-brutal border-3 border-ink bg-white p-6 shadow-brutal sm:p-8"
     >
       <SectionHeading title="Abilities" note="colour notes" />
 

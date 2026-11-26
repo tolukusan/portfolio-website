@@ -4,7 +4,7 @@ export default function EducationSection() {
   return (
     <section
       id="education"
-      className="scroll-mt-24 rounded-brutal border-3 border-ink bg-white p-6 shadow-brutal sm:p-8"
+      className="scroll-mt-32 rounded-brutal border-3 border-ink bg-white p-6 shadow-brutal sm:p-8"
     >
       <SectionHeading title="Education" note="training arc" />
       <div className="mt-5 rounded-brutal-sm border-3 border-ink bg-cream p-4 sm:p-5">

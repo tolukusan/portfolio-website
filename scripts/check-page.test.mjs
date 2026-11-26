@@ -213,3 +213,20 @@ test("every mailto uses the one socialLinks email", () => {
   const mailtos = new Set([...html.matchAll(/href="(mailto:[^"]+)"/g)].map((m) => m[1]));
   assert.equal(mailtos.size, 1);
 });
+
+const tabs = ["profile", "abilities", "backstory", "projects", "education", "party"];
+
+test("header has folder tabs for every section, in order", () => {
+  const header = html.slice(html.indexOf("<header"), html.indexOf("</header>"));
+  const hrefs = [...header.matchAll(/href="#([^"]+)"/g)].map((m) => m[1]);
+  assert.deepEqual(hrefs, tabs);
+  assert.match(textOf(header), /Add to party/);
+  assert.doesNotMatch(html, /aria-label="Section navigation"/);
+});
+
+test("tab targets clear the sticky header", () => {
+  for (const id of tabs) {
+    const open = html.match(new RegExp(`<section[^>]*id="${id}"[^>]*>`))?.[0] ?? "";
+    assert.match(open, /scroll-mt-32/, id);
+  }
+});

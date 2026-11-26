@@ -6,7 +6,7 @@ const buttonBase =
 
 export default function Hero() {
   return (
-    <section id="about" className="relative scroll-mt-24">
+    <section id="about" className="relative scroll-mt-32">
       <span className="absolute -top-4 left-6 z-10 rounded-full border-3 border-ink bg-orange px-4 py-1 font-mono text-xs font-bold text-ink shadow-brutal-sm">
         {hero.tab}
       </span>

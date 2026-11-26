@@ -1,10 +1,10 @@
 export const navSections = [
-  { id: "about", number: "01", label: "About" },
-  { id: "abilities", number: "02", label: "Abilities" },
-  { id: "backstory", number: "03", label: "Backstory" },
-  { id: "projects", number: "04", label: "Projects" },
-  { id: "education", number: "05", label: "Education" },
-  { id: "party", number: "06", label: "Add to party" },
+  { id: "profile", label: "Profile" },
+  { id: "abilities", label: "Abilities" },
+  { id: "backstory", label: "Backstory" },
+  { id: "projects", label: "Projects" },
+  { id: "education", label: "Education" },
+  { id: "party", label: "Add to party" },
 ] as const;
 
 export const party = {
