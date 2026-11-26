@@ -14,16 +14,12 @@ export default function Hero() {
       className="relative scroll-mt-32 overflow-hidden border-b-3 border-ink bg-cream"
     >
       <div className="relative mx-auto grid max-w-7xl grid-rows-[auto_1fr_auto] px-4 pt-8 sm:pt-10 lg:h-[calc(100svh-6.5rem)] lg:min-h-[640px] lg:max-h-[920px] lg:px-8 lg:pb-10">
-        {/* top-left: who and what */}
+        {/* top-left: who, and what he builds */}
         <div className="relative z-10 max-w-sm lg:max-w-[min(22rem,32vw)]">
-          <p className="font-mono text-xs uppercase tracking-wider text-ink/70">
-            {hero.tab} · {hero.greeting}
-          </p>
-          <h1 className="mt-2 font-display text-3xl font-bold leading-[1.05] sm:text-4xl">
+          <h1 className="font-display text-3xl font-bold leading-[1.05] sm:text-4xl">
             {hero.name}{" "}
             <span className="text-ink/60">({hero.nickname})</span>
           </h1>
-          <p className="mt-3 font-mono text-sm text-ink">{hero.role}</p>
           <p className="mt-3 text-sm text-ink/80 sm:text-base">{hero.pitch}</p>
         </div>
 

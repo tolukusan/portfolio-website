@@ -12,11 +12,8 @@ export const party = {
 } as const;
 
 export const hero = {
-  tab: "CHARACTER SHEET",
-  greeting: "Hello, I'm",
   name: "Afolayan Iseoluwa",
   nickname: "Tolu",
-  role: "Backend-leaning full-stack developer",
   pitch:
     "I build reliable backend systems (ledgers, job queues, automation) and the interfaces on top of them.",
   recruitLabel: "Recruit this character",

@@ -106,8 +106,6 @@ test("hero introduces Tolu and offers the recruit action", () => {
   const h = section("about");
   const t = textOf(h);
   for (const s of [
-    "CHARACTER SHEET",
-    "Hello, I'm",
     "Afolayan Iseoluwa",
     "(Tolu)",
     "I build reliable backend systems (ledgers, job queues, automation) and the interfaces on top of them.",
@@ -121,6 +119,8 @@ test("hero introduces Tolu and offers the recruit action", () => {
   assert.match(h, /href="mailto:[^"]+"/);
   assert.match(h, /href="#projects"/);
   assert.doesNotMatch(text, /CURRENTLY BUILDING/);
+  // removed at Tolu's request: the label above the name and the role line
+  assert.doesNotMatch(t, /CHARACTER SHEET|Hello, I'm|Backend-leaning full-stack developer/i);
 });
 
 test("hero puts the waving figure in front of a giant decorative name", () => {
