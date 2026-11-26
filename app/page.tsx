@@ -1,31 +1,30 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import ProfileCard from "@/components/ProfileCard";
+import ProjectsSection from "@/components/ProjectsSection";
 import SkillsSection from "@/components/SkillsSection";
 import ExperienceSection from "@/components/ExperienceSection";
-import ProjectsSection from "@/components/ProjectsSection";
 import EducationSection from "@/components/EducationSection";
 import ContactPanel from "@/components/ContactPanel";
 import Footer from "@/components/Footer";
+import PeekContact from "@/components/PeekContact";
 
+// A sequence of full-width bands, each holding one idea.
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-
-      <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-10 px-4 py-8 lg:px-6 lg:py-12">
+      <main className="flex-1">
         <Hero />
-        <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-2">
-          <ProfileCard />
-          <SkillsSection />
-        </div>
-        <ExperienceSection />
+        <ProfileCard />
         <ProjectsSection />
+        <SkillsSection />
+        <ExperienceSection />
         <EducationSection />
         <ContactPanel />
       </main>
-
       <Footer />
+      <PeekContact />
     </div>
   );
 }
