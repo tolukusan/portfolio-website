@@ -344,3 +344,10 @@ test("the header carries no name wordmark (the hero's h1 names him)", () => {
   assert.doesNotMatch(textOf(header), /Afolayan|Iseoluwa/);
   assert.match(section("about"), /<h1[\s\S]*Afolayan Iseoluwa/);
 });
+
+test("tab title and description name the role without the old wording", () => {
+  const title = raw.match(/<title>([^<]*)<\/title>/)?.[1] ?? "";
+  assert.match(title, /Afolayan Iseoluwa/);
+  assert.match(title, /Backend Developer/);
+  assert.doesNotMatch(raw, /Backend-leaning/i);
+});

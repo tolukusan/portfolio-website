@@ -21,9 +21,9 @@ const hand = Caveat({
 });
 
 export const metadata: Metadata = {
-  title: "Afolayan Iseoluwa | Backend-leaning Full-Stack Developer",
+  title: "Afolayan Iseoluwa (Tolu) | Backend Developer",
   description:
-    "Portfolio of Afolayan Iseoluwa (Tolu) \u2014 Backend-leaning Full-Stack Developer building with TypeScript, NestJS, Prisma, and PostgreSQL.",
+    "Tolu builds reliable backend systems (ledgers, job queues, automation) and the interfaces on top of them, with TypeScript, NestJS and PostgreSQL.",
 };
 
 export default function RootLayout({
