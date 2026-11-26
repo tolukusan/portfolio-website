@@ -22,7 +22,7 @@ export function StagedPose({ staging }: { staging: Staging }) {
 
   if (how === "sit") {
     return (
-      <div className={`relative mx-auto aspect-[554/1076] ${poseHeight}`}>
+      <div className={`relative mx-auto aspect-[558/1081] ${poseHeight}`}>
         {/* the ledge he sits on; the seat line is at ~59% of the pose */}
         <span
           aria-hidden="true"

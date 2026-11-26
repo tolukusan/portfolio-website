@@ -5,8 +5,14 @@
 #   scripts/cut-character.sh <input image> <output name> [--white]
 #
 # --white also removes near-white areas (pose "peek" had a white wall strip).
-# Needs ffmpeg and node. The alpha edge is eroded 2px to remove the pink fringe
-# that JPEG compression leaves around the ink outline.
+# Needs ffmpeg and node. Edge pixels are kept (never eroded, which would eat the
+# ink outline); instead, magenta-tinted fringe pixels (red and blue both well
+# above green) are recoloured to their green level. Nothing on the character
+# is tinted that way: skin, plaid and the olive tee all have green >= blue.
+#
+# ERASE="x0,y0,x1,y1;..." (source-image pixels) clears stray marks Gemini drew,
+# e.g. the ledge line in the hang and sit poses:
+#   ERASE="0,44,291,57;358,44,544,57;611,44,896,57" scripts/cut-character.sh pose2.jfif hang
 set -euo pipefail
 
 in="$1"; name="$2"; white="${3:-}"
@@ -20,8 +26,17 @@ if [ "$white" = "--white" ]; then
   pre="format=rgb24,geq=r='if($W,255,r(X,Y))':g='if($W,0,g(X,Y))':b='if($W,255,b(X,Y))'"
 fi
 
+M="gt(r(X\,Y)-g(X\,Y)\,28)*gt(b(X\,Y)-g(X\,Y)\,28)"
+A="alpha(X,Y)"
+if [ -n "${ERASE:-}" ]; then
+  IFS=';' read -ra rects <<< "$ERASE"
+  for r in "${rects[@]}"; do
+    IFS=',' read -r x0 y0 x1 y1 <<< "$r"
+    A="$A*(1-between(X\,$x0\,$x1)*between(Y\,$y0\,$y1))"
+  done
+fi
 ffmpeg -loglevel error -y -i "$in" -filter_complex \
-  "$pre,colorkey=0xFF00FF:0.3:0.08,format=rgba,split[c][a];[a]alphaextract,erosion,erosion[m];[c][m]alphamerge" \
+  "$pre,colorkey=0xFF00FF:0.3:0.1,format=rgba,geq=r='if($M,g(X,Y),r(X,Y))':g='g(X,Y)':b='if($M,g(X,Y),b(X,Y))':a='$A'" \
   "$tmp/cut.png"
 
 IFS=, read -r w h < <(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 "$tmp/cut.png")

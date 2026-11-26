@@ -2,12 +2,12 @@
 // the image carries no information, so it is hidden from assistive tech.
 
 export const POSES = {
-  wave: { w: 437, h: 1066 },
-  hang: { w: 329, h: 1060 },
-  point: { w: 610, h: 1086 },
-  sit: { w: 554, h: 1076 },
-  peek: { w: 599, h: 1200 },
-  thumbs: { w: 490, h: 1083 },
+  wave: { w: 442, h: 1072 },
+  hang: { w: 335, h: 1065 },
+  point: { w: 615, h: 1091 },
+  sit: { w: 558, h: 1081 },
+  peek: { w: 604, h: 1200 },
+  thumbs: { w: 495, h: 1089 },
 } as const;
 
 export type PoseName = keyof typeof POSES;
