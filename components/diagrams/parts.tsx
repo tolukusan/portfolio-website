@@ -5,18 +5,37 @@ const INK = "#111111";
 const ORANGE = "#FF6B35";
 const YELLOW = "#FFC93C";
 
+// A diagram wider than 360 units shrinks its labels below ~9px on phones.
+// Such diagrams pass a narrower `phone` layout, shown below the sm breakpoint.
 export function DiagramFrame({
   label,
   viewBox,
   children,
+  phone,
 }: {
   label: string;
   viewBox: string;
   children: React.ReactNode;
+  phone?: { viewBox: string; children: React.ReactNode };
 }) {
   return (
     <div className="rounded-brutal-sm border-3 border-ink bg-cream bg-[radial-gradient(#11111133_1px,transparent_1px)] p-3 [background-size:16px_16px]">
-      <svg viewBox={viewBox} className="h-auto w-full" role="img" aria-label={label}>
+      {phone && (
+        <svg
+          viewBox={phone.viewBox}
+          className="h-auto w-full sm:hidden"
+          role="img"
+          aria-label={label}
+        >
+          {phone.children}
+        </svg>
+      )}
+      <svg
+        viewBox={viewBox}
+        className={phone ? "hidden h-auto w-full sm:block" : "h-auto w-full"}
+        role="img"
+        aria-label={label}
+      >
         {children}
       </svg>
     </div>
@@ -39,7 +58,7 @@ export function DiagramNode({
   highlight?: boolean;
 }) {
   const lines = Array.isArray(label) ? label : [label];
-  const lineHeight = 15;
+  const lineHeight = 17;
   return (
     <g>
       <rect
@@ -56,7 +75,7 @@ export function DiagramNode({
         x={x + w / 2}
         textAnchor="middle"
         dominantBaseline="middle"
-        fontSize={12}
+        fontSize={14}
         className="fill-ink font-mono"
       >
         {lines.map((line, i) => (
@@ -125,7 +144,7 @@ export function EdgeLabel({
   children: string;
 }) {
   return (
-    <text x={x} y={y} fontSize={11} className="fill-ink/70 font-mono">
+    <text x={x} y={y} fontSize={12} className="fill-ink/70 font-mono">
       {children}
     </text>
   );

@@ -172,11 +172,19 @@ const diagramLabels = {
   "Enterprise Request": ["Request form (Power Apps)", "SharePoint records", "Multi-stage email routing"],
 };
 
+// True when the element's class list has a bare `hidden` (shown only from a breakpoint up).
+const hiddenOnPhone = (tag) => /class="(?:[^"]*\s)?hidden[\s"]/.test(tag);
+
 test("every project has a diagram built only from its published steps", () => {
   const p = section("projects");
   const t = textOf(p);
   assert.match(t, /sketchbook pages/);
-  assert.equal((p.match(/role="img"/g) ?? []).length, 4);
+  // A diagram may have a phone and a desktop variant; one of each per project is visible.
+  const svgs = p.match(/<svg[^>]*role="img"[^>]*>/g) ?? [];
+  const onPhone = svgs.filter((s) => !hiddenOnPhone(s));
+  const onDesktop = svgs.filter((s) => !/sm:hidden/.test(s));
+  assert.equal(onPhone.length, 4);
+  assert.equal(onDesktop.length, 4);
   for (const labels of Object.values(diagramLabels)) {
     for (const l of labels) assert.ok(t.includes(l), l);
   }
@@ -229,4 +237,22 @@ test("tab targets clear the sticky header", () => {
     const open = html.match(new RegExp(`<section[^>]*id="${id}"[^>]*>`))?.[0] ?? "";
     assert.match(open, /scroll-mt-32/, id);
   }
+});
+
+test("diagram labels stay readable on phones", () => {
+  // At 360px the featured diagram gets ~252px of width. A viewBox wider than
+  // 360 units shrinks 12-14px labels below ~9px, so phone-visible diagrams
+  // must be at most 360 units wide.
+  const svgs = section("projects").match(/<svg[^>]*role="img"[^>]*>/g) ?? [];
+  for (const svg of svgs.filter((s) => !hiddenOnPhone(s))) {
+    const width = Number(svg.match(/viewBox="0 0 (\d+)/)[1]);
+    assert.ok(width <= 360, `phone-visible diagram is ${width} units wide`);
+  }
+});
+
+test("diagram labels use readable font sizes", () => {
+  const sizes = [...section("projects").matchAll(/<text[^>]*font-size="(\d+)"/g)].map((m) => Number(m[1]));
+  assert.ok(sizes.length > 0);
+  for (const size of sizes) assert.ok(size >= 12, `font-size ${size}`);
+  assert.ok(sizes.filter((n) => n >= 14).length >= sizes.length / 2, "node labels below 14");
 });
