@@ -73,3 +73,30 @@ test("education has its training arc note in the handwriting font", () => {
   assert.match(textOf(edu), /training arc/);
   assert.match(edu, /font-hand/);
 });
+
+test("profile card lists the character sheet rows and hides empty likes", () => {
+  const p = section("profile");
+  const t = textOf(p);
+  assert.match(p, /<dl/);
+  for (const row of [
+    "Class",
+    "Base",
+    "Current guild",
+    "Main stats",
+    "Backend / full-stack developer",
+    "Nigeria",
+    "Ibadan Digital Academy, Lead Developer (2025 to present)",
+  ]) {
+    assert.ok(t.includes(row), row);
+  }
+  assert.doesNotMatch(t, /Likes|Dislikes/);
+});
+
+test("abilities uses one swatch tone per group and holds the code block", () => {
+  const a = section("abilities");
+  const tones = new Set([...a.matchAll(/data-tone="(\w+)"/g)].map((m) => m[1]));
+  assert.deepEqual([...tones].sort(), ["mint", "orange", "sky", "yellow"]);
+  assert.match(textOf(a), /colour notes/);
+  assert.match(a, /stack\.config\.ts/);
+  assert.ok(!html.includes('id="skills"'));
+});

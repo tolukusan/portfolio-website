@@ -1,31 +1,49 @@
 export const navSections = [
   { id: "about", number: "01", label: "About" },
-  { id: "skills", number: "02", label: "Skills & Stack" },
+  { id: "abilities", number: "02", label: "Abilities" },
   { id: "experience", number: "03", label: "Experience" },
   { id: "projects", number: "04", label: "Projects" },
   { id: "education", number: "05", label: "Education" },
   { id: "contact", number: "06", label: "Contact" },
 ] as const;
 
+export type Profile = {
+  characterClass: string;
+  base: string;
+  guild: string;
+  mainStats: readonly string[];
+  bio: string;
+  likes?: readonly string[];
+  dislikes?: readonly string[];
+};
+
+export const profile: Profile = {
+  characterClass: "Backend / full-stack developer",
+  base: "Nigeria",
+  guild: "Ibadan Digital Academy, Lead Developer (2025 to present)",
+  mainStats: ["TypeScript", "Node.js", "NestJS", "PostgreSQL"],
+  bio: "Lead Developer at Ibadan Digital Academy. I build reliable backend systems and the full-stack products around them, from fintech savings platforms to internal tooling.",
+};
+
 export const skillGroups = [
   {
     label: "Languages",
-    tone: "sky",
+    tone: "yellow",
     skills: ["TypeScript", "Python"],
   },
   {
     label: "Backend",
-    tone: "mint",
+    tone: "orange",
     skills: ["Node.js", "NestJS", "FastAPI", "BullMQ", "Redis"],
   },
   {
     label: "Data",
-    tone: "sky",
+    tone: "mint",
     skills: ["PostgreSQL", "Prisma"],
   },
   {
     label: "Frontend",
-    tone: "mint",
+    tone: "sky",
     skills: ["React", "Next.js"],
   },
 ] as const;

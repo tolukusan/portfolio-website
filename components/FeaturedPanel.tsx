@@ -1,6 +1,3 @@
-import CodeBlock from "./CodeBlock";
-import { codeSnippet } from "@/lib/data";
-
 export default function FeaturedPanel() {
   return (
     <section id="about" className="relative scroll-mt-24">
@@ -24,10 +21,6 @@ export default function FeaturedPanel() {
           backend systems and the full-stack products around them &mdash; from
           fintech savings platforms to internal tooling.
         </p>
-
-        <div className="mt-6">
-          <CodeBlock code={codeSnippet} />
-        </div>
       </div>
     </section>
   );
