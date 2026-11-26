@@ -33,6 +33,7 @@ export default function Pose({
       width={w}
       height={h}
       data-pose={pose}
+      data-flip={flip ? "" : undefined}
       loading={eager ? "eager" : "lazy"}
       decoding="async"
       {...(eager ? { fetchPriority: "high" as const } : {})}

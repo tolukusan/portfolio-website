@@ -298,3 +298,28 @@ test("diagram labels use readable font sizes", () => {
   for (const size of sizes) assert.ok(size >= 12, `font-size ${size}`);
   assert.ok(sizes.filter((n) => n >= 14).length >= sizes.length / 2, "node labels below 14");
 });
+
+test("poses on dark bands get a cream outline", () => {
+  assert.match(css, /\.on-dark img\[data-pose\]\{filter:drop-shadow\(/);
+  // the contact band is dark and holds a pose
+  assert.match(section("party"), /class="[^"]*on-dark/);
+  assert.match(section("party"), /data-pose=/);
+});
+
+test("pose motion only runs for people who have not asked for reduced motion", () => {
+  // Every rule that starts a pose animation sits inside the no-preference query.
+  const motion = css.indexOf("@media (prefers-reduced-motion:no-preference)");
+  const firstUse = css.search(/img\[data-pose=(hang|wave|sit|point|thumbs)\]\{[^}]*animation/);
+  assert.ok(motion >= 0, "no reduced-motion guard");
+  assert.ok(firstUse > motion, "a pose animation is declared outside the reduced-motion guard");
+  // and the hanging/sitting poses never slide on entry (they hold a line/ledge)
+  assert.match(css, /img\[data-pose=hang\]\{[^}]*--enter-y:0px/);
+  assert.match(css, /img\[data-pose=sit\]\{[^}]*--enter-y:0px/);
+});
+
+test("hero figure is a button that turns him around", () => {
+  const button = section("about").match(/<button[^>]*aria-pressed="false"[^>]*>[\s\S]*?<\/button>/)?.[0] ?? "";
+  assert.ok(button, "no toggle button in the hero");
+  assert.match(button, /aria-label="[^"]*turn[^"]*"/i);
+  assert.match(button, /data-pose="wave"/);
+});

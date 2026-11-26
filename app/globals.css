@@ -41,6 +41,96 @@
   }
 }
 
+/* ---------- Character poses ---------- */
+
+/* On dark bands, a cream outline keeps the dark hair and trousers readable. */
+.on-dark img[data-pose] {
+  filter: drop-shadow(2px 0 0 #fdf6e9) drop-shadow(-2px 0 0 #fdf6e9)
+    drop-shadow(0 2px 0 #fdf6e9) drop-shadow(0 -2px 0 #fdf6e9);
+}
+
+/* Idle motion, one per pose. Each uses only `rotate` or `scale` (never
+   `translate`), so it composes with the flip (a transform) and with the
+   scroll-in entrance below (which uses `translate`). All of it is skipped for
+   people who ask for reduced motion: they get the still drawing. */
+@media (prefers-reduced-motion: no-preference) {
+  /* Hanging: a slow pendulum swing from the hands. */
+  img[data-pose="hang"] {
+    transform-origin: 50% 2%;
+    animation: pose-swing 4.5s ease-in-out infinite;
+  }
+  /* Standing wave (hero): breathing, from the feet. */
+  img[data-pose="wave"] {
+    transform-origin: 50% 100%;
+    animation: pose-breathe 4s ease-in-out infinite;
+  }
+  /* Sitting: a lazy rock on the seat. */
+  img[data-pose="sit"] {
+    transform-origin: 50% 59%;
+    animation: pose-rock 6s ease-in-out infinite;
+  }
+  /* Pointing: leans into the point now and then. --lean flips with the pose. */
+  img[data-pose="point"] {
+    --lean: 1.6deg;
+    transform-origin: 50% 100%;
+    animation: pose-lean 3.2s ease-in-out infinite;
+  }
+  img[data-pose="point"][data-flip] {
+    --lean: -1.6deg;
+  }
+  /* Thumbs up: a small pop every few seconds. */
+  img[data-pose="thumbs"] {
+    transform-origin: 50% 100%;
+    animation: pose-pop 3.5s ease-in-out infinite;
+  }
+
+  /* Scroll-in entrance where the browser supports scroll-driven animation
+     (Chrome, Edge). Elsewhere the poses are simply there. The hero figure is
+     already on screen, so it skips this. */
+  @supports (animation-timeline: view()) {
+    img[data-pose]:not([data-pose="wave"]) {
+      animation-name: pose-enter, var(--idle);
+      animation-duration: auto, var(--idle-time);
+      animation-timing-function: ease-out, ease-in-out;
+      animation-iteration-count: 1, infinite;
+      animation-fill-mode: both, none;
+      animation-timeline: view(), auto;
+      animation-range: entry 0% entry 80%, normal;
+    }
+    /* Hanging and sitting poses are attached to a line or ledge, so they only
+       fade in; sliding would pull them off it. */
+    img[data-pose="hang"] { --idle: pose-swing; --idle-time: 4.5s; --enter-y: 0px; }
+    img[data-pose="sit"] { --idle: pose-rock; --idle-time: 6s; --enter-y: 0px; }
+    img[data-pose="point"] { --idle: pose-lean; --idle-time: 3.2s; }
+    img[data-pose="thumbs"] { --idle: pose-pop; --idle-time: 3.5s; }
+  }
+}
+
+@keyframes pose-swing {
+  0%, 100% { rotate: -2.2deg; }
+  50% { rotate: 2.2deg; }
+}
+@keyframes pose-breathe {
+  0%, 100% { scale: 1 1; }
+  50% { scale: 1 1.012; }
+}
+@keyframes pose-rock {
+  0%, 100% { rotate: -0.8deg; }
+  50% { rotate: 0.8deg; }
+}
+@keyframes pose-lean {
+  0%, 55%, 100% { rotate: 0deg; }
+  70%, 82% { rotate: var(--lean); }
+}
+@keyframes pose-pop {
+  0%, 80%, 100% { scale: 1; }
+  88% { scale: 1.035; }
+}
+@keyframes pose-enter {
+  from { opacity: 0; translate: 0 var(--enter-y, 48px); }
+  to { opacity: 1; translate: 0 0; }
+}
+
 @layer utilities {
   .tag-badge {
     @apply inline-flex items-center rounded-full border-2 border-ink px-3 py-1 font-mono text-xs font-medium;

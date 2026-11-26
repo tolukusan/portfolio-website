@@ -1,5 +1,5 @@
 import { emailHref, hero, heroNotes } from "@/lib/data";
-import Pose from "./Pose";
+import TurnablePose from "./TurnablePose";
 
 export const buttonBase =
   "inline-flex items-center justify-center rounded-brutal-sm border-3 border-ink px-5 py-3 font-display font-bold text-ink shadow-brutal transition-all hover:-translate-y-0.5 hover:shadow-brutal-lg";
@@ -36,9 +36,8 @@ export default function Hero() {
           >
             TOLU
           </p>
-          <Pose
+          <TurnablePose
             pose="wave"
-            eager
             className="absolute bottom-0 left-1/2 h-full -translate-x-1/2 lg:h-[94%]"
           />
         </div>
