@@ -4,7 +4,6 @@ import ProfileCard from "@/components/ProfileCard";
 import ProjectsSection from "@/components/ProjectsSection";
 import SkillsSection from "@/components/SkillsSection";
 import ExperienceSection from "@/components/ExperienceSection";
-import EducationSection from "@/components/EducationSection";
 import ContactPanel from "@/components/ContactPanel";
 import Footer from "@/components/Footer";
 import PeekContact from "@/components/PeekContact";
@@ -20,7 +19,6 @@ export default function Home() {
         <ProjectsSection />
         <SkillsSection />
         <ExperienceSection />
-        <EducationSection />
         <ContactPanel />
       </main>
       <Footer />

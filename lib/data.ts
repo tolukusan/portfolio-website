@@ -3,15 +3,7 @@ export const navSections = [
   { id: "projects", label: "Projects" },
   { id: "abilities", label: "Abilities" },
   { id: "backstory", label: "Backstory" },
-  { id: "education", label: "Education" },
   { id: "party", label: "Add to party" },
-] as const;
-
-// The thin ink strip above the header.
-export const topStrip = [
-  "Available for work",
-  "Based in Nigeria",
-  "Open to backend roles",
 ] as const;
 
 export const party = {

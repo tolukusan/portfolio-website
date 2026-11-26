@@ -68,10 +68,11 @@ test("no placeholders, invented metrics or banned terms", () => {
   }
 });
 
-test("education has its training arc note in the handwriting font", () => {
-  const edu = section("education");
-  assert.match(textOf(edu), /training arc/);
-  assert.match(edu, /font-hand/);
+test("the page does not mention Tolu's school", () => {
+  // \bEducation\b, so the "Educational Content Publishing" project still passes.
+  assert.doesNotMatch(text, /Covenant|University|BSc|2nd Class|\bEducation\b|training arc/i);
+  assert.ok(!html.includes('id="education"'));
+  assert.ok(!html.includes('href="#education"'));
 });
 
 test("profile card lists the character sheet rows and hides empty likes", () => {
@@ -222,7 +223,7 @@ test("every mailto uses the one socialLinks email", () => {
   assert.equal(mailtos.size, 1);
 });
 
-const sections = ["profile", "projects", "abilities", "backstory", "education", "party"];
+const sections = ["profile", "projects", "abilities", "backstory", "party"];
 
 test("header links to every section, in page order", () => {
   const header = html.slice(html.indexOf("<header"), html.indexOf("</header>"));
@@ -235,12 +236,9 @@ test("header links to every section, in page order", () => {
   assert.match(header, /href="mailto:/);
 });
 
-test("top strip sits above the header", () => {
-  const strip = html.slice(0, html.indexOf("<header"));
-  const t = textOf(strip);
-  for (const s of ["Available for work", "Based in Nigeria", "Open to backend roles"]) {
-    assert.ok(t.includes(s), s);
-  }
+test("nothing sits above the header (the top strip was removed)", () => {
+  const above = textOf(html.slice(html.indexOf("<body"), html.indexOf("<header")));
+  assert.doesNotMatch(above, /Available for work|Open to backend roles/i);
 });
 
 test("sections are bands that clear the sticky header and snap gently", () => {
@@ -339,4 +337,10 @@ test("animation frames match their pose's size, so frames swap in place", () => 
     assert.ok(files.includes(base), `${f} has no base pose`);
     assert.equal(size(f), size(base), `${f} differs in size from ${base}`);
   }
+});
+
+test("the header carries no name wordmark (the hero's h1 names him)", () => {
+  const header = html.slice(html.indexOf("<header"), html.indexOf("</header>"));
+  assert.doesNotMatch(textOf(header), /Afolayan|Iseoluwa/);
+  assert.match(section("about"), /<h1[\s\S]*Afolayan Iseoluwa/);
 });
