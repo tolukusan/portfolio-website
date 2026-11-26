@@ -407,6 +407,7 @@ test("link previews: absolute image URL, large card, 1200x630", () => {
   if (existsSync(card)) {
     const page = readFileSync(card, "utf8");
     assert.match(page, /This page could not be found/);
-    assert.doesNotMatch(page, /BACKEND DEVELOPER|Backend Developer</p>/i);
+    // the card's ink caption bar and pose image are absent
+    assert.doesNotMatch(page, /bg-ink px-14|character\/cut\/wave\.webp/);
   }
 });
