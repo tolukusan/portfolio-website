@@ -378,3 +378,18 @@ test("abilities cover the CV's skill areas with generic integrations", () => {
     assert.ok(t.includes(s), s);
   }
 });
+
+test("TOLU is a liquid-filled word that stays solid for reduced motion", () => {
+  const word = section("about").match(/<p[^>]*>TOLU<\/p>/)?.[0] ?? "";
+  assert.match(word, /aria-hidden="true"/);
+  assert.match(word, /class="[^"]*liquid-word/);
+  // reduced motion: solid orange letters, no liquid
+  assert.match(css, /prefers-reduced-motion:reduce\)[\s\S]*?\.liquid-word\{[^}]*background:none/);
+});
+
+test("profile tiles fill with cream on hover and invert their text", () => {
+  const tiles = section("profile").match(/<div[^>]*class="[^"]*fill-tile[^"]*"/g) ?? [];
+  assert.equal(tiles.length, 3);
+  assert.match(css, /\.fill-tile:hover:before\{[^}]*transform:translateY\(0\)/);
+  assert.match(css, /\.fill-tile>\*\{mix-blend-mode:difference/);
+});

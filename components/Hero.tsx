@@ -1,4 +1,5 @@
 import { emailHref, hero, heroNotes } from "@/lib/data";
+import LiquidWord from "./LiquidWord";
 import TurnablePose from "./TurnablePose";
 
 export const buttonBase =
@@ -25,13 +26,11 @@ export default function Hero() {
 
         {/* middle: the giant word with the figure in front of it */}
         <div className="relative -mx-4 mt-6 h-[360px] sm:h-[440px] lg:static lg:mx-0 lg:mt-0 lg:h-auto">
-          <p
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-[12%] select-none text-center font-display font-bold leading-none tracking-[-0.04em] text-orange lg:top-[30%]"
+          <LiquidWord
+            text="TOLU"
+            className="pointer-events-none absolute inset-x-0 top-[12%] select-none text-center font-display font-bold leading-none tracking-[-0.04em] lg:top-[30%]"
             style={{ fontSize: "clamp(8rem, 31vw, 30rem)" }}
-          >
-            TOLU
-          </p>
+          />
           <TurnablePose
             pose="wave"
             className="absolute bottom-0 left-1/2 h-full -translate-x-1/2 lg:h-[94%]"

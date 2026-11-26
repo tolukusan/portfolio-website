@@ -26,7 +26,7 @@ export default function ProfileCard() {
           {tiles.map((tile) => (
             <div
               key={tile.term}
-              className="flex flex-col justify-between gap-8 md:min-h-[13rem] rounded-brutal border-3 border-cream/90 p-6"
+              className="fill-tile flex flex-col justify-between gap-8 md:min-h-[13rem] rounded-brutal border-3 border-cream/90 p-6"
             >
               <span aria-hidden="true" className="font-mono text-sm text-yellow">
                 {tile.n}
