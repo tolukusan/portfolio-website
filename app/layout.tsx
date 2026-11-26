@@ -20,10 +20,18 @@ const hand = Caveat({
   variable: "--font-hand",
 });
 
+const title = "Afolayan Iseoluwa (Tolu) | Backend Developer";
+const description =
+  "Tolu builds reliable backend systems (ledgers, job queues, automation) and the interfaces on top of them, with TypeScript, NestJS and PostgreSQL.";
+
 export const metadata: Metadata = {
-  title: "Afolayan Iseoluwa (Tolu) | Backend Developer",
-  description:
-    "Tolu builds reliable backend systems (ledgers, job queues, automation) and the interfaces on top of them, with TypeScript, NestJS and PostgreSQL.",
+  // Link previews need absolute image URLs; the preview image itself is
+  // app/opengraph-image.png (regenerate with scripts/make-og-image.sh).
+  metadataBase: new URL("https://tolukusan-code-najin.vercel.app"),
+  title,
+  description,
+  openGraph: { type: "website", title, description, siteName: "Afolayan Iseoluwa (Tolu)" },
+  twitter: { card: "summary_large_image", title, description },
 };
 
 export default function RootLayout({

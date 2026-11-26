@@ -2,7 +2,7 @@
 // Run with: pnpm build && pnpm check
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 
 const raw = readFileSync(".next/server/app/index.html", "utf8");
@@ -392,4 +392,21 @@ test("profile tiles fill with cream on hover and invert their text", () => {
   assert.equal(tiles.length, 3);
   assert.match(css, /\.fill-tile:hover:before\{[^}]*transform:translateY\(0\)/);
   assert.match(css, /\.fill-tile>\*\{mix-blend-mode:difference/);
+});
+
+test("link previews: absolute image URL, large card, 1200x630", () => {
+  const og = raw.match(/<meta property="og:image" content="([^"]+)"/)?.[1] ?? "";
+  assert.match(og, /^https:\/\/[^/]+\/opengraph-image\.png/);
+  assert.match(raw, /<meta property="og:image:width" content="1200"/);
+  assert.match(raw, /<meta property="og:image:height" content="630"/);
+  assert.match(raw, /<meta property="og:image:alt" content="[^"]*waving[^"]*"/);
+  assert.match(raw, /<meta name="twitter:card" content="summary_large_image"/);
+  assert.match(raw, /<meta property="og:title" content="Afolayan Iseoluwa \(Tolu\) \| Backend Developer"/);
+  // the card source page is development-only: in production it is a 404
+  const card = ".next/server/app/og-card.html";
+  if (existsSync(card)) {
+    const page = readFileSync(card, "utf8");
+    assert.match(page, /This page could not be found/);
+    assert.doesNotMatch(page, /BACKEND DEVELOPER|Backend Developer</p>/i);
+  }
 });
