@@ -8,7 +8,7 @@ export default function ProfileCard() {
   const tiles = [
     { term: "Class", value: profile.characterClass, n: "01" },
     { term: "Base", value: profile.base, n: "02" },
-    { term: "Current guild", value: profile.guild, n: "03" },
+    { term: "Last guild", value: profile.guild, n: "03" },
   ];
 
   return (

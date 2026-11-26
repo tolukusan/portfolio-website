@@ -18,16 +18,11 @@ export default function SkillsSection() {
       <div className="mx-auto max-w-7xl px-4 py-20 sm:py-24 lg:px-8 lg:py-32">
         <SectionHeading title="Abilities" note="colour notes" />
 
-        <div className="mt-12 grid grid-cols-1 border-y-3 border-ink sm:grid-cols-2 lg:grid-cols-4">
-          {skillGroups.map((group, i) => (
-            <div
-              key={group.label}
-              className={`flex flex-col gap-5 py-8 sm:px-6 ${
-                i > 0 ? "border-t-3 border-ink sm:border-t-0" : ""
-              } ${i % 2 === 1 ? "sm:border-l-3" : ""} ${
-                i >= 2 ? "sm:border-t-3 lg:border-t-0" : ""
-              } ${i === 2 ? "lg:border-l-3" : ""} ${i === 0 ? "sm:pl-0" : ""}`}
-            >
+        {/* 3px ink gaps on an ink background draw the grid lines, for any
+            number of groups */}
+        <div className="mt-12 grid grid-cols-1 gap-[3px] border-y-3 border-ink bg-ink sm:grid-cols-2 lg:grid-cols-4">
+          {skillGroups.map((group) => (
+            <div key={group.label} className="flex flex-col gap-5 bg-white px-0 py-8 sm:px-6">
               <span
                 aria-hidden="true"
                 className={`h-14 w-14 rounded-brutal-sm border-3 border-ink ${swatchClasses[group.tone]}`}

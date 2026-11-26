@@ -10,6 +10,8 @@ const staging: Record<(typeof projects)[number]["slug"], Staging> = {
   "internal-workflow-automation": { pose: "hang", how: "hang", side: "left" },
   "educational-content-publishing": { pose: "sit", how: "sit", side: "right" },
   "enterprise-request-management": { pose: "thumbs", how: "stand", side: "left" },
+  "multi-tenant-sales-crm": { pose: "point", how: "stand", side: "right", flip: true },
+  "ai-provider-fallback": { pose: "hang", how: "hang", side: "left" },
 };
 
 export default function ProjectsSection() {

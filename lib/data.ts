@@ -3,6 +3,7 @@ export const navSections = [
   { id: "projects", label: "Projects" },
   { id: "abilities", label: "Abilities" },
   { id: "backstory", label: "Backstory" },
+  { id: "quests", label: "Side quests" },
   { id: "party", label: "Add to party" },
 ] as const;
 
@@ -15,7 +16,7 @@ export const hero = {
   name: "Afolayan Iseoluwa",
   nickname: "Tolu",
   pitch:
-    "I build reliable backend systems (ledgers, job queues, automation) and the interfaces on top of them.",
+    "I build software around complicated real-world workflows, where data integrity, automation, integrations and reliability matter.",
   recruitLabel: "Recruit this character",
   recruitHint: "Email me about a role",
   projectsLabel: "See projects",
@@ -23,9 +24,9 @@ export const hero = {
 
 // Hand-written notes in the hero's bottom-right corner.
 export const heroNotes = [
-  "thinks in queues and transactions",
-  "ships weekly",
-  "fixes what breaks at 2am",
+  "reconciles missed payments",
+  "writes the docs",
+  "teaches web development",
 ] as const;
 
 export type Profile = {
@@ -39,44 +40,47 @@ export type Profile = {
 };
 
 export const profile: Profile = {
-  characterClass: "Backend / full-stack developer",
-  base: "Nigeria",
-  guild: "Ibadan Digital Academy, Lead Developer (2025 to present)",
+  characterClass: "Backend developer",
+  base: "Lagos, Nigeria",
+  guild: "Ibadan Digital Academy, Backend Developer (2026)",
   mainStats: ["TypeScript", "Node.js", "NestJS", "PostgreSQL"],
-  bio: "Lead Developer at Ibadan Digital Academy. I build reliable backend systems and the full-stack products around them, from fintech savings platforms to internal tooling.",
+  bio: "Backend-focused developer who builds fintech systems, workflow automation and internal business tools: the application logic, data models and transaction workflows underneath. I like improving how systems and teams work, and explaining them to the people who use them.",
 };
 
 export const skillGroups = [
-  {
-    label: "Languages",
-    tone: "yellow",
-    skills: ["TypeScript", "Python"],
-  },
-  {
-    label: "Backend",
-    tone: "orange",
-    skills: ["Node.js", "NestJS", "FastAPI", "BullMQ", "Redis"],
-  },
-  {
-    label: "Data",
-    tone: "mint",
-    skills: ["PostgreSQL", "Prisma"],
-  },
-  {
-    label: "Frontend",
-    tone: "sky",
-    skills: ["React", "Next.js"],
-  },
+  { label: "Languages", tone: "yellow", skills: ["TypeScript", "JavaScript", "Python", "SQL"] },
+  { label: "Backend", tone: "orange", skills: ["Node.js", "NestJS", "FastAPI", "Flask", "Django", "REST APIs"] },
+  { label: "Data and queues", tone: "mint", skills: ["PostgreSQL", "Prisma", "SQLite", "Redis", "BullMQ"] },
+  { label: "Frontend", tone: "sky", skills: ["React", "Next.js", "Tailwind CSS"] },
+  { label: "DevOps", tone: "orange", skills: ["Docker", "GitHub Actions", "CI/CD", "Nginx", "VPS deployment"] },
+  { label: "Business apps", tone: "mint", skills: ["Power Apps", "Power Automate", "SharePoint", "Google Apps Script", "ERPNext"] },
+  { label: "Integrations", tone: "sky", skills: ["Payment APIs", "KYC APIs", "Savings APIs", "Webhooks"] },
+  { label: "Testing and AI", tone: "yellow", skills: ["Auth and transaction tests", "Load testing", "AI-assisted workflows"] },
 ] as const;
 
+// From Tolu's Work Experience doc (the CV source of truth). Years only.
 export const experience = [
   {
-    role: "Lead Developer",
+    role: "Backend Developer",
     org: "Ibadan Digital Academy",
-    period: "2025 \u2014 Present",
-    // TODO: replace with real responsibilities / achievements
-    description:
-      "Leading development for the academy's internal tooling and training platforms, mentoring peer developers, and shipping full-stack features end to end.",
+    period: "2026",
+    points: [
+      "Built ledger structures and transaction workflows for a fintech application with NestJS, Prisma and PostgreSQL.",
+      "Built automated reconciliation that catches missed payment webhooks, resolves incomplete transactions and handles reversal credits.",
+      "Integrated third-party payment, identity-verification (KYC) and savings APIs.",
+      "Deployed services to a VPS with CI workflows and automated database backups.",
+      "Built internal tools, including a certificate editor with batch PNG and PDF export and an Apps Script reporting system.",
+    ],
+  },
+  {
+    role: "Low-Code Developer",
+    org: "Ha-Shem Limited",
+    period: "2024",
+    points: [
+      "Built internal business apps with Power Apps and Power Automate.",
+      "Built a request management system with a user-facing app, SharePoint records and automated email approvals.",
+      "Turned manual business processes into digital workflows.",
+    ],
   },
 ] as const;
 
@@ -118,6 +122,48 @@ export const projects = [
     stack: ["Power Apps", "Power Automate", "SharePoint"],
     note: "requests route themselves",
   },
+  {
+    slug: "multi-tenant-sales-crm",
+    name: "Multi-Tenant Sales CRM",
+    tagline: "From spreadsheet to web app",
+    description:
+      "Turned a sales team's spreadsheet CRM into a web app: a PostgreSQL schema with Row-Level Security for tenant isolation, role-based access and an audit log, pipeline stages that move from recorded activity, and order approvals, with end-to-end tests for tenancy and workflow rules.",
+    stack: ["NestJS", "Prisma", "PostgreSQL", "Next.js"],
+    note: "each customer's data stays in its own lane",
+  },
+  {
+    slug: "ai-provider-fallback",
+    name: "AI Assistant Provider Layer",
+    tagline: "Model failover for a bookkeeping app",
+    description:
+      "Designed the AI assistant layer for a chat-first bookkeeping app: one shared interface across several model providers, and a fallback that skips a provider for a short time when it times out, fails or hits a rate limit.",
+    stack: ["NestJS", "TypeScript", "Prisma"],
+    note: "when one model stalls, the next one answers",
+  },
+] as const;
+
+// Achievements and teaching, from the Work Experience doc.
+export const quests = [
+  {
+    title: "2nd place, Cisco National Hackathon",
+    year: "2021",
+    detail: "Placed second in a national hackathon run by Cisco.",
+  },
+  {
+    title: "Regional coach, Girls in ICT",
+    year: "2026",
+    detail: "Coached the Ibadan team to 3rd place at the South-West Regionals, from idea to prototype to presentation.",
+  },
+  {
+    title: "Instructor, digital literacy programme",
+    year: "2026",
+    detail: "Taught foundational web development and computing concepts weekly, and ran practical CodeLabs sessions for an 18-student cohort.",
+  },
+  {
+    title: "Seminar co-ordinator, with Rotary International",
+    year: "2026",
+    detail: "Co-ordinated a technical seminar on the practical use of AI tools and digital workflow automation.",
+  },
 ] as const;
 
 export const codeSnippet = `// stack.config.ts
@@ -127,10 +173,10 @@ export const stack = {
   database: ["PostgreSQL", "Prisma"],
   queue: ["Redis", "BullMQ"],
   frontend: ["React", "Next.js"],
+  infra: ["Docker", "GitHub Actions", "Nginx"],
 } as const;
 
-// currently building: financial infrastructure
-// status: shipping features weekly`;
+// open to backend roles`;
 
 export const socialLinks = [
   { label: "GitHub", href: "https://github.com/tolukusan", icon: "github" },

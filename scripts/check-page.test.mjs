@@ -61,7 +61,8 @@ test("no placeholders, invented metrics or banned terms", () => {
     /\d+\s?%/,
     /idempoten/i,
     /\bcron\b/i,
-    /webhook/i,
+    /—/, // no em dashes (Tolu's writing rule)
+    /Lead Developer/, // his IDA title was Backend Developer
     /Ajoti|DigitalBridge|StitchPro|IDA AI Sandbox/,
   ]) {
     assert.doesNotMatch(text, re);
@@ -82,11 +83,11 @@ test("profile card lists the character sheet rows and hides empty likes", () => 
   for (const row of [
     "Class",
     "Base",
-    "Current guild",
+    "Last guild",
     "Main stats",
-    "Backend / full-stack developer",
-    "Nigeria",
-    "Ibadan Digital Academy, Lead Developer (2025 to present)",
+    "Backend developer",
+    "Lagos, Nigeria",
+    "Ibadan Digital Academy, Backend Developer (2026)",
   ]) {
     assert.ok(t.includes(row), row);
   }
@@ -108,7 +109,7 @@ test("hero introduces Tolu and offers the recruit action", () => {
   for (const s of [
     "Afolayan Iseoluwa",
     "(Tolu)",
-    "I build reliable backend systems (ledgers, job queues, automation) and the interfaces on top of them.",
+    "I build software around complicated real-world workflows, where data integrity, automation, integrations and reliability matter.",
     "Recruit this character",
     "Email me about a role",
     "See projects",
@@ -130,10 +131,12 @@ test("hero puts the waving figure in front of a giant decorative name", () => {
   assert.ok(wave, "no wave pose in the hero");
   assert.match(wave, /loading="eager"/);
   const t = textOf(h);
-  for (const s of ["thinks in queues and transactions", "ships weekly", "fixes what breaks at 2am"]) {
+  for (const s of ["reconciles missed payments", "writes the docs", "teaches web development"]) {
     assert.ok(t.includes(s), s);
   }
   assert.doesNotMatch(html, /sketch-(draw|fill)|wireframe/i);
+  // claims not backed by Tolu's work-experience doc
+  assert.doesNotMatch(text, /ships weekly|2am|shipping features weekly|currently building/i);
 });
 
 test("poses are decorative, sized, and lazy below the fold", () => {
@@ -148,13 +151,17 @@ test("poses are decorative, sized, and lazy below the fold", () => {
   }
 });
 
-test("backstory is a timeline of the existing roles", () => {
+test("backstory lists both verified roles, newest first", () => {
   const b = section("backstory");
   assert.match(b, /<ol/);
   const t = textOf(b);
-  for (const s of ["Backstory", "experience log", "Lead Developer", "Ibadan Digital Academy"]) {
+  for (const s of ["Backstory", "experience log", "Backend Developer", "Ibadan Digital Academy", "2026", "Low-Code Developer", "Ha-Shem Limited", "2024"]) {
     assert.ok(t.includes(s), s);
   }
+  assert.ok(t.indexOf("Ibadan Digital Academy") < t.indexOf("Ha-Shem Limited"));
+  assert.doesNotMatch(t, /Present/i);
+  // integrations stay generic: no provider names
+  assert.doesNotMatch(text, /Flutterwave|Mono|Cowrywise/);
   assert.ok(!html.includes('id="experience"'));
 });
 
@@ -163,6 +170,8 @@ const diagramLabels = {
   "Internal Workflow": ["Shared tasks", "Certificates", "Image layouts & mockups", "Reports"],
   "Educational Content": ["Legacy framework (refactored)", "Publishing pipeline", "Layouts"],
   "Enterprise Request": ["Request form (Power Apps)", "SharePoint records", "Multi-stage email routing"],
+  "Multi-Tenant Sales CRM": ["Spreadsheet CRM", "PostgreSQL schema", "Row-Level Security", "Web app", "Order approvals"],
+  "AI Assistant Provider Layer": ["Assistant request", "Provider interface", "Model A", "Model B", "skip on timeout"],
 };
 
 // True when the element's class list has a bare `hidden` (shown only from a breakpoint up).
@@ -176,8 +185,8 @@ test("every project has a diagram built only from its published steps", () => {
   const svgs = p.match(/<svg[^>]*role="img"[^>]*>/g) ?? [];
   const onPhone = svgs.filter((s) => !hiddenOnPhone(s));
   const onDesktop = svgs.filter((s) => !/sm:hidden/.test(s));
-  assert.equal(onPhone.length, 4);
-  assert.equal(onDesktop.length, 4);
+  assert.equal(onPhone.length, 6);
+  assert.equal(onDesktop.length, 6);
   for (const labels of Object.values(diagramLabels)) {
     for (const l of labels) assert.ok(t.includes(l), l);
   }
@@ -190,7 +199,9 @@ test("every project has a diagram built only from its published steps", () => {
 test("one project per band, each with its own diagram and pose", () => {
   const p = section("projects");
   const bands = p.split(/<article\b/).slice(1);
-  assert.equal(bands.length, 4);
+  assert.equal(bands.length, 6);
+  // anonymised: no product or client names from the CV
+  assert.doesNotMatch(p, /TradePadi|WhatsApp-First|Tailoring/i);
   for (const band of bands) {
     const svgs = band.match(/<svg[^>]*role="img"[^>]*>/g) ?? [];
     assert.equal(svgs.filter((s) => !hiddenOnPhone(s)).length, 1);
@@ -223,7 +234,7 @@ test("every mailto uses the one socialLinks email", () => {
   assert.equal(mailtos.size, 1);
 });
 
-const sections = ["profile", "projects", "abilities", "backstory", "party"];
+const sections = ["profile", "projects", "abilities", "backstory", "quests", "party"];
 
 test("header links to every section, in page order", () => {
   const header = html.slice(html.indexOf("<header"), html.indexOf("</header>"));
@@ -350,4 +361,20 @@ test("tab title and description name the role without the old wording", () => {
   assert.match(title, /Afolayan Iseoluwa/);
   assert.match(title, /Backend Developer/);
   assert.doesNotMatch(raw, /Backend-leaning/i);
+});
+
+test("side quests band lists the verified achievements and teaching", () => {
+  const q = section("quests");
+  const t = textOf(q);
+  for (const s of ["Side quests", "Cisco National Hackathon", "2nd place", "Girls in ICT", "Rotary International", "web development"]) {
+    assert.ok(t.includes(s), s);
+  }
+  assert.match(q, /data-pose=/);
+});
+
+test("abilities cover the CV's skill areas with generic integrations", () => {
+  const t = textOf(section("abilities"));
+  for (const s of ["DevOps", "Docker", "GitHub Actions", "Business apps", "Power Apps", "Google Apps Script", "Integrations", "Payment APIs", "KYC", "Load testing"]) {
+    assert.ok(t.includes(s), s);
+  }
 });

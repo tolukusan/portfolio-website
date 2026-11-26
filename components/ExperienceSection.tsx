@@ -22,9 +22,11 @@ export default function ExperienceSection() {
             </p>
             <h3 className="mt-2 font-display text-3xl font-bold">{role.role}</h3>
             <p className="mt-1 font-mono text-sm text-ink">{role.org}</p>
-            <p className="mt-4 max-w-xl text-base text-ink/80">
-              {role.description}
-            </p>
+            <ul className="mt-4 flex max-w-xl list-disc flex-col gap-2 pl-5 text-base text-ink/80 marker:text-ink">
+              {role.points.map((point) => (
+                <li key={point}>{point}</li>
+              ))}
+            </ul>
           </li>
         ))}
       </ol>
