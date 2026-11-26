@@ -4,8 +4,13 @@ export const navSections = [
   { id: "backstory", number: "03", label: "Backstory" },
   { id: "projects", number: "04", label: "Projects" },
   { id: "education", number: "05", label: "Education" },
-  { id: "contact", number: "06", label: "Contact" },
+  { id: "party", number: "06", label: "Add to party" },
 ] as const;
+
+export const party = {
+  heading: "Add to party?",
+  line: "Need a backend developer on your team? I'm open to roles.",
+} as const;
 
 export const hero = {
   tab: "CHARACTER SHEET",

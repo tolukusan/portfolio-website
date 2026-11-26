@@ -191,3 +191,25 @@ test("featured project comes first and spans the row", () => {
   assert.ok(p.indexOf("Financial Ledger") < p.indexOf("Internal Workflow"));
   assert.match(p, /data-featured="true"/);
 });
+
+test("add to party panel has recruit button and labelled sticker links", () => {
+  const c = section("party");
+  const t = textOf(c);
+  for (const s of [
+    "Add to party?",
+    "Need a backend developer on your team? I'm open to roles.",
+    "Recruit this character",
+    "Email",
+    "GitHub",
+    "LinkedIn",
+    "WhatsApp",
+  ]) {
+    assert.ok(t.includes(s), s);
+  }
+  assert.ok(!html.includes('id="contact"'));
+});
+
+test("every mailto uses the one socialLinks email", () => {
+  const mailtos = new Set([...html.matchAll(/href="(mailto:[^"]+)"/g)].map((m) => m[1]));
+  assert.equal(mailtos.size, 1);
+});
