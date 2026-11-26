@@ -396,7 +396,7 @@ test("profile tiles fill with cream on hover and invert their text", () => {
 
 test("link previews: absolute image URL, large card, 1200x630", () => {
   const og = raw.match(/<meta property="og:image" content="([^"]+)"/)?.[1] ?? "";
-  assert.match(og, /^https:\/\/[^/]+\/opengraph-image\.png/);
+  assert.match(og, /^https:\/\/iseoluwa-afolayan\.vercel\.app\/opengraph-image\.png/);
   assert.match(raw, /<meta property="og:image:width" content="1200"/);
   assert.match(raw, /<meta property="og:image:height" content="630"/);
   assert.match(raw, /<meta property="og:image:alt" content="[^"]*waving[^"]*"/);

@@ -27,7 +27,7 @@ const description =
 export const metadata: Metadata = {
   // Link previews need absolute image URLs; the preview image itself is
   // app/opengraph-image.png (regenerate with scripts/make-og-image.sh).
-  metadataBase: new URL("https://tolukusan-code-najin.vercel.app"),
+  metadataBase: new URL("https://iseoluwa-afolayan.vercel.app"),
   title,
   description,
   openGraph: { type: "website", title, description, siteName: "Afolayan Iseoluwa (Tolu)" },
